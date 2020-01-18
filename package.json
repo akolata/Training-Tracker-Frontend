@@ -21,6 +21,8 @@
     "@angular/pwa": "^0.803.22",
     "@angular/router": "~8.2.14",
     "@angular/service-worker": "~8.2.14",
+    "@ngrx/effects": "^8.6.0",
+    "@ngrx/schematics": "^8.6.0",
     "@ngrx/store": "^8.6.0",
     "@ngrx/store-devtools": "^8.6.0",
     "rxjs": "~6.4.0",

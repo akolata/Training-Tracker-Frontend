@@ -1,4 +1,6 @@
 <h1>Sign in</h1>
+
+<p *ngIf="signInError$ | async; let error">{{error}}</p>
 <form [formGroup]="signInForm" (ngSubmit)="onSignInSubmit()">
   <label for="username">Username</label>
   <input id="username" type="text" formControlName="username">

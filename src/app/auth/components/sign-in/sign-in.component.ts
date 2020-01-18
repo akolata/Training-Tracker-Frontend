@@ -1,5 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import * as fromModel from '../../model';
+import {AuthService} from '../../services';
+import * as fromAuthStore from '../../reducers';
+import {AuthActions} from '../../reducers';
+import * as fromGlobalStore from '../../../reducers';
+import {select, Store} from '@ngrx/store';
+import {Observable, Subject} from 'rxjs';
 
 @Component({
   selector: 'tt-sign-in',
@@ -9,16 +16,25 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 export class SignInComponent implements OnInit {
 
   signInForm: FormGroup;
+  signInError$: Observable<String>;
+  private unsubscribe$: Subject<void> = new Subject<void>();
 
-  constructor(private fb: FormBuilder) {
+// https://medium.com/angular-in-depth/handling-error-states-with-ngrx-6b16f6d12a08
+
+  constructor(
+    private fb: FormBuilder,
+    private service: AuthService,
+    private store: Store<fromGlobalStore.AppState>) {
     this.signInForm = this.buildSignInForm();
   }
 
   ngOnInit() {
+    this.signInError$ = this.store.pipe(select(fromAuthStore.selectSignInError));
   }
 
   onSignInSubmit() {
-    console.log(this.signInForm.value);
+    const form: fromModel.SignInForm = this.signInForm.value;
+    this.store.dispatch(AuthActions.signIn({payload: {form}}));
   }
 
   private buildSignInForm(): FormGroup {

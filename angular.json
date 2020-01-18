@@ -89,7 +89,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "training-tracker-frontend:build"
+            "browserTarget": "training-tracker-frontend:build",
+            "proxyConfig": "proxy.conf.json"
           },
           "configurations": {
             "production": {
@@ -147,6 +148,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "training-tracker-frontend"
+    }
+  },
+  "defaultProject": "training-tracker-frontend",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }
