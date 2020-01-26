@@ -1,17 +1,17 @@
 import {RouterModule, Routes} from '@angular/router';
-import {SignInComponent, SignUpComponent} from './components';
 import {NgModule} from '@angular/core';
+import * as fromPages from './pages';
 import * as fromCoreGuards from '../core/guards/no-auth-guard.service';
 
 const routes: Routes = [
   {
     path: 'sign-in',
-    component: SignInComponent,
+    component: fromPages.SignInPage,
     canActivate: [fromCoreGuards.NoAuthGuard]
   },
   {
     path: 'sign-up',
-    component: SignUpComponent,
+    component: fromPages.SignUpPage,
     canActivate: [fromCoreGuards.NoAuthGuard]
   }
 ];
