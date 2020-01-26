@@ -19,9 +19,9 @@ import {CoreModule} from './core/core.module';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    AuthModule,
     CoreModule.forRoot(),
+    AuthModule,
+    AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
     StoreModule.forRoot(reducers, {
       metaReducers,

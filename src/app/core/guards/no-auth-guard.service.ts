@@ -9,6 +9,8 @@ export class NoAuthGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    console.log('NoAuthGuard canActivate: ', this.authService.isSignedOut());
+
     return this.authService.isSignedOut();
   }
 

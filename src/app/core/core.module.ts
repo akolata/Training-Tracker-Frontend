@@ -6,7 +6,6 @@ import * as fromGuards from './guards';
 import * as fromServices from './services';
 import * as fromPages from './pages';
 import {CoreRoutingModule} from './core-routing.module';
-import { LandingPage } from './pages/landing/landing.page';
 
 
 @NgModule({
@@ -14,7 +13,7 @@ import { LandingPage } from './pages/landing/landing.page';
     CommonModule,
     CoreRoutingModule
   ],
-  declarations: [...fromPages.pages, LandingPage]
+  declarations: [...fromPages.pages]
 })
 export class CoreModule {
 

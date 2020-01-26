@@ -1,24 +1,14 @@
-import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
-import {Router} from "@angular/router";
+import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {Router} from '@angular/router';
 import {noop, Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
-import {Injectable} from "@angular/core";
+import {Injectable} from '@angular/core';
 
 import * as fromServices from '../services';
 
 @Injectable()
 export class AuthErrorInterceptor implements HttpInterceptor {
   constructor(private router: Router, private authService: fromServices.AuthService) {
-  }
-
-  private handleErrorResponse(err: any): void {
-    if (AuthErrorInterceptor.isUnauthorized(err) && AuthErrorInterceptor.isPathProtected(err.url)) {
-      this.authService.removeToken();
-      this.router.navigateByUrl('/unathorized');
-    }
-    if (AuthErrorInterceptor.isForbidden(err) && AuthErrorInterceptor.isPathProtected(err.url)) {
-      this.router.navigateByUrl('/unauhtorized');
-    }
   }
 
   private static isUnauthorized(err: any): boolean {
@@ -30,11 +20,12 @@ export class AuthErrorInterceptor implements HttpInterceptor {
   }
 
   private static isPathProtected(url: string): boolean {
-    return url && url.indexOf('/auth/sign-up') === -1 && url.indexOf('/auth/sign-in') === -1;
+    return url && url.indexOf('/auth/sign-up') === -1
+      && url.indexOf('/auth/sign-in') === -1
+      && url.indexOf('/landing') === -1;
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
     return next.handle(request)
       .pipe(
         tap(
@@ -42,5 +33,15 @@ export class AuthErrorInterceptor implements HttpInterceptor {
           (err: any) => this.handleErrorResponse(err)
         )
       );
+  }
+
+  private handleErrorResponse(err: any): void {
+    if (AuthErrorInterceptor.isUnauthorized(err) && AuthErrorInterceptor.isPathProtected(err.url)) {
+      this.authService.removeToken();
+      this.router.navigateByUrl('/auth/sign-in');
+    }
+    if (AuthErrorInterceptor.isForbidden(err) && AuthErrorInterceptor.isPathProtected(err.url)) {
+      this.router.navigateByUrl('/unauthorized');
+    }
   }
 }

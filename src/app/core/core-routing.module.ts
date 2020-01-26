@@ -6,6 +6,11 @@ import * as fromCoreGuards from './guards/';
 const routes: Routes = [
   {
     path: '',
+    pathMatch: 'full',
+    redirectTo: '/landing'
+  },
+  {
+    path: 'landing',
     component: fromPages.LandingPage,
     canActivate: [fromCoreGuards.NoAuthGuard]
   },
@@ -15,11 +20,8 @@ const routes: Routes = [
   },
   {
     path: 'unauthorized',
-    component: fromPages.UnauthorizedPage
-  },
-  {
-    path: '**',
-    redirectTo: '/not-found'
+    component: fromPages.UnauthorizedPage,
+    canActivate: [fromCoreGuards.NoAuthGuard]
   }
 ];
 
