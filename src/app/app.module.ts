@@ -12,6 +12,8 @@ import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {EffectsModule} from '@ngrx/effects';
 import {AppEffects} from './app.effects';
 import {CoreModule} from './core/core.module';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MaterialModule} from "./material/material.module";
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import {CoreModule} from './core/core.module';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    MaterialModule,
     CoreModule.forRoot(),
     AuthModule,
     AppRoutingModule,
