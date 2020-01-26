@@ -20,3 +20,4 @@ export const authReducer = createReducer(
 export * from './auth.actions';
 export * from './auth-action-types';
 export * from './auth.selector';
+export * from './auth.effects';
