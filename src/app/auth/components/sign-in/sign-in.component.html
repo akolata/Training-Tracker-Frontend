@@ -1,0 +1,21 @@
+<h1>Sign in</h1>
+
+<form [formGroup]="signInForm" (ngSubmit)="onSignInSubmit()">
+  <mat-form-field>
+    <input matInput placeholder="Username" type="text" formControlName="username">
+    <mat-error *ngIf="signInForm.get('username').hasError('required')">
+      Username is required
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Password" type="password" formControlName="password">
+    <mat-error *ngIf="signInForm.get('password').hasError('required')">
+      Password is required
+    </mat-error>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit" [disabled]="signInForm.invalid">Sign in</button>
+</form>
+<p class="global-error">
+  <span *ngIf="signInError$ | async; let error"> {{error}}</span>
+</p>
