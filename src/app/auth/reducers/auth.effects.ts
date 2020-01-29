@@ -4,9 +4,10 @@ import * as fromCoreServices from '../../core/services';
 import {AuthActions} from './auth-action-types';
 import {catchError, map, switchMap, tap} from 'rxjs/operators';
 import * as fromAuthModel from '../model';
-import {signInFailure, signInSuccess} from './auth.actions';
+import {signInFailure, signInSuccess, signUpFailure, signUpSuccess} from './auth.actions';
 import {of} from 'rxjs';
 import {Router} from '@angular/router';
+import {HttpErrorResponse} from '@angular/common/http';
 
 
 @Injectable()
@@ -35,6 +36,26 @@ export class AuthEffects {
       tap(response => this.authService.saveToken(response.accessToken)),
       tap(() => this.router.navigateByUrl('/user'))
     ), {dispatch: false});
+
+  signUp$ = createEffect(() =>
+    this.actions$
+      .pipe(
+        ofType(AuthActions.signUp),
+        map(action => {
+          const request: fromAuthModel.SignUpRequest = action.payload.form;
+          return request;
+        }),
+        switchMap(request => this.authService.signUp(request)
+          .pipe(
+            map(response => signUpSuccess({})),
+            catchError((error: HttpErrorResponse) => {
+              console.log(error);
+              return of(signUpFailure(null));
+            })
+          )
+        )
+      )
+  );
 
   constructor(private actions$: Actions, private authService: fromCoreServices.AuthService, private router: Router) {
   }

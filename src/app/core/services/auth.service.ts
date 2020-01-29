@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import * as fromModel from '../../auth/model';
 import {HttpClient} from '@angular/common/http';
-import { JwtHelperService } from "@auth0/angular-jwt";
+import {JwtHelperService} from "@auth0/angular-jwt";
 
 
 @Injectable({
@@ -12,7 +12,7 @@ export class AuthService {
 
   static readonly JWT_TOKEN_KEY = 'tt-jwt-token';
 
-  private jwtHelper : JwtHelperService = new JwtHelperService();
+  private jwtHelper: JwtHelperService = new JwtHelperService();
 
   constructor(private http: HttpClient) {
   }
@@ -47,5 +47,9 @@ export class AuthService {
 
   signIn(request: fromModel.SignInRequest): Observable<fromModel.SignInResponse> {
     return this.http.post<fromModel.SignInResponse>('/api/auth/sign-in', request);
+  }
+
+  signUp(request: fromModel.SignUpRequest): Observable<any> {
+    return this.http.post<any>('/api/auth/sign-up', request);
   }
 }
