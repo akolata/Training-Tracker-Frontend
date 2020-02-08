@@ -1,3 +1,5 @@
+@import '../../../../styles';
+
 .sign-up-section {
   display: flex;
   flex-direction: row;
@@ -54,3 +56,16 @@
   }
 }
 
+@include respond(tab-port) {
+  .sign-up-section {
+    justify-content: center;
+
+    &-form {
+      width: 80vw;
+    }
+
+    &-figure {
+      display: none;
+    }
+  }
+}
