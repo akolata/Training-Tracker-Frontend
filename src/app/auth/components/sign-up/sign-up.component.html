@@ -30,14 +30,14 @@
   </mat-form-field>
 
   <mat-form-field>
-    <input type="text" matInput placeholder="Password" formControlName="password">
+    <input type="password" matInput placeholder="Password" formControlName="password">
     <mat-error *ngIf="signUpForm.get('password').invalid">
       {{getErrorMessage('password', 'Password', signUpForm)}}
     </mat-error>
   </mat-form-field>
 
   <mat-form-field>
-    <input type="text" matInput placeholder="Repeat password" formControlName="repeatedPassword">
+    <input type="password" matInput placeholder="Repeat password" formControlName="repeatedPassword">
     <mat-error *ngIf="signUpForm.get('repeatedPassword').invalid">
       {{getErrorMessage('repeatedPassword', 'Password', signUpForm)}}
     </mat-error>
@@ -45,3 +45,6 @@
 
   <button mat-raised-button color="primary" type="submit" [disabled]="signUpForm.invalid">Sign up</button>
 </form>
+<p class="global-error">
+  <span *ngIf="signUpError$ | async as signUpError">{{signUpError}}</span>
+</p>

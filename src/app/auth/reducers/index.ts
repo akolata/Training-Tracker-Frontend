@@ -16,7 +16,8 @@ export const authReducer = createReducer(
   initialAuthState,
   on(AuthActions.signInFailure, state => ({...state, signInFailureErrorMsg: 'Username or password is invalid'})),
   on(AuthActions.signInSuccess, state => ({...state, signInFailureErrorMsg: undefined})),
-  on(AuthActions.signUpFailure, (state, {payload}) => ({...state, signUpFailureErrorMsg: payload.response.errorMsg}))
+  on(AuthActions.signUpFailure, (state, {payload}) => ({...state, signUpFailureErrorMsg: payload.response.errorMsg})),
+  on(AuthActions.signUpSuccess, state => ({...state, signUpFailureErrorMsg: undefined}))
 );
 
 export * from './auth.actions';

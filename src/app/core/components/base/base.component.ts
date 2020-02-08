@@ -9,7 +9,7 @@ import {FormGroup, ValidationErrors} from '@angular/forms';
 })
 export class BaseComponent {
 
-  constructor(public errorMessageResolverService: fromServices.ErrorMessageResolverService) {
+  constructor(private errorMessageResolverService: fromServices.ErrorMessageResolverService) {
   }
 
   public getErrorMessage(name: string, labelToDisplay: string, form: FormGroup) {

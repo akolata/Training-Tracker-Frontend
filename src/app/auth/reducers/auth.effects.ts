@@ -8,6 +8,7 @@ import {signInFailure, signInSuccess, signUpFailure, signUpSuccess} from './auth
 import {of} from 'rxjs';
 import {Router} from '@angular/router';
 import {HttpErrorResponse} from '@angular/common/http';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 @Injectable()
@@ -48,16 +49,30 @@ export class AuthEffects {
         switchMap(request => this.authService.signUp(request)
           .pipe(
             map(response => signUpSuccess({})),
-            catchError((error: HttpErrorResponse) => {
-              console.log(error);
-              return of(signUpFailure(null));
+            catchError((errorResponse: HttpErrorResponse) => {
+              return of(signUpFailure({payload: {response: errorResponse.error}}));
             })
           )
         )
       )
   );
 
-  constructor(private actions$: Actions, private authService: fromCoreServices.AuthService, private router: Router) {
+  signUpSuccess$ = createEffect(() =>
+      this.actions$
+        .pipe(
+          ofType(AuthActions.signUpSuccess),
+          tap(() => this.router.navigateByUrl('/sign-in')),
+          tap(() => this.snackBar.open('Sign up successful. Now You can sign in.', 'Close', {
+            duration: 10_000
+          }))
+        )
+    , {dispatch: false});
+
+  constructor(
+    private actions$: Actions,
+    private authService: fromCoreServices.AuthService,
+    private router: Router,
+    private snackBar: MatSnackBar) {
   }
 
 }

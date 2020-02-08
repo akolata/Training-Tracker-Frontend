@@ -1,29 +1,38 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Store} from '@ngrx/store';
+import {select, Store} from '@ngrx/store';
 import * as fromGlobalStore from '../../../reducers';
 import * as fromModel from '../../model';
 import * as fromCoreComponents from '../../../core/components';
 import * as fromCoreServices from '../../../core/services';
-import {AuthActions} from '../../reducers';
+import * as fromAuthStore from '../../reducers';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'tt-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss']
 })
-export class SignUpComponent extends fromCoreComponents.BaseComponent {
+export class SignUpComponent extends fromCoreComponents.BaseComponent implements OnInit {
 
   signUpForm: FormGroup;
+  signUpError$: Observable<string>;
 
-  constructor(private fb: FormBuilder, private store: Store<fromGlobalStore.AppState>, errorMessageResolverService: fromCoreServices.ErrorMessageResolverService) {
+  constructor(
+    private fb: FormBuilder,
+    private store: Store<fromGlobalStore.AppState>,
+    errorMessageResolverService: fromCoreServices.ErrorMessageResolverService) {
     super(errorMessageResolverService);
     this.signUpForm = this.buildSignUpForm();
   }
 
+  ngOnInit(): void {
+    this.signUpError$ = this.store.pipe(select(fromAuthStore.selectSignUpError));
+  }
+
   onSubmit(): void {
     const form: fromModel.SignUpForm = this.signUpForm.value;
-    this.store.dispatch(AuthActions.signUp({payload: {form}}));
+    this.store.dispatch(fromAuthStore.AuthActions.signUp({payload: {form}}));
   }
 
   private buildSignUpForm(): FormGroup {
