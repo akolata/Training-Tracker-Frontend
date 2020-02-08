@@ -8,6 +8,7 @@ import * as fromCorePages from './pages';
 import {CoreRoutingModule} from './core-routing.module';
 import {MaterialModule} from '../material/material.module';
 import * as fromCoreComponents from './components';
+import { BaseComponent } from './components/base/base.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import * as fromCoreComponents from './components';
   ],
   declarations: [
     ...fromCoreComponents.components,
-    ...fromCorePages.pages
+    ...fromCorePages.pages,
+    BaseComponent
   ],
   exports: [
     fromCoreComponents.AppHeaderComponent,

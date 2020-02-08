@@ -3,6 +3,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Store} from '@ngrx/store';
 import * as fromGlobalStore from '../../../reducers';
 import * as fromModel from '../../model';
+import * as fromCoreComponents from '../../../core/components';
+import * as fromCoreServices from '../../../core/services';
 import {AuthActions} from '../../reducers';
 
 @Component({
@@ -10,11 +12,12 @@ import {AuthActions} from '../../reducers';
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss']
 })
-export class SignUpComponent {
+export class SignUpComponent extends fromCoreComponents.BaseComponent {
 
   signUpForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private store: Store<fromGlobalStore.AppState>) {
+  constructor(private fb: FormBuilder, private store: Store<fromGlobalStore.AppState>, errorMessageResolverService: fromCoreServices.ErrorMessageResolverService) {
+    super(errorMessageResolverService);
     this.signUpForm = this.buildSignUpForm();
   }
 
@@ -25,12 +28,12 @@ export class SignUpComponent {
 
   private buildSignUpForm(): FormGroup {
     return this.fb.group({
-      'firstName': ['', Validators.required],
-      'lastName': ['', Validators.required],
-      'email': ['', [Validators.required, Validators.email]],
-      'username': ['', [Validators.required]],
-      'password': ['', Validators.required],
-      'repeatedPassword': ['', Validators.required]
+      'firstName': ['', [Validators.required, Validators.minLength(2), Validators.maxLength(60)]],
+      'lastName': ['', [Validators.required, Validators.minLength(2), Validators.maxLength(60)]],
+      'email': ['', [Validators.required, Validators.email, Validators.maxLength(200)]],
+      'username': ['', [Validators.required, Validators.minLength(2), Validators.maxLength(60)]],
+      'password': ['', [Validators.required, Validators.minLength(8), Validators.maxLength(60)]],
+      'repeatedPassword': ['', [Validators.required, Validators.minLength(8), Validators.maxLength(60)]],
     });
   }
 }
