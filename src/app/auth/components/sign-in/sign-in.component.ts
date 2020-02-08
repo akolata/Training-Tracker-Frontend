@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import * as fromModel from '../../model';
-import {AuthService} from '../../../core/services';
 import * as fromAuthStore from '../../reducers';
 import {AuthActions} from '../../reducers';
 import * as fromGlobalStore from '../../../reducers';
@@ -18,10 +17,7 @@ export class SignInComponent implements OnInit {
   signInForm: FormGroup;
   signInError$: Observable<String>;
 
-  constructor(
-    private fb: FormBuilder,
-    private service: AuthService,
-    private store: Store<fromGlobalStore.AppState>) {
+  constructor(private fb: FormBuilder, private store: Store<fromGlobalStore.AppState>) {
     this.signInForm = this.buildSignInForm();
   }
 

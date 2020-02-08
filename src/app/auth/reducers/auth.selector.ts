@@ -8,6 +8,11 @@ export const selectSignInError = createSelector(
   authState => authState.signInFailureErrorMsg
 );
 
+export const selectSignUpError = createSelector(
+  selectAuthState,
+  authState => authState.signUpFailureErrorMsg
+);
+
 export const selectUser = createSelector(
   selectAuthState,
   authState => authState.user

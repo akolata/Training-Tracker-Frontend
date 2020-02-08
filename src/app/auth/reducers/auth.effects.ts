@@ -4,9 +4,11 @@ import * as fromCoreServices from '../../core/services';
 import {AuthActions} from './auth-action-types';
 import {catchError, map, switchMap, tap} from 'rxjs/operators';
 import * as fromAuthModel from '../model';
-import {signInFailure, signInSuccess} from './auth.actions';
+import {signInFailure, signInSuccess, signUpFailure, signUpSuccess} from './auth.actions';
 import {of} from 'rxjs';
 import {Router} from '@angular/router';
+import {HttpErrorResponse} from '@angular/common/http';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 @Injectable()
@@ -36,7 +38,41 @@ export class AuthEffects {
       tap(() => this.router.navigateByUrl('/user'))
     ), {dispatch: false});
 
-  constructor(private actions$: Actions, private authService: fromCoreServices.AuthService, private router: Router) {
+  signUp$ = createEffect(() =>
+    this.actions$
+      .pipe(
+        ofType(AuthActions.signUp),
+        map(action => {
+          const request: fromAuthModel.SignUpRequest = action.payload.form;
+          return request;
+        }),
+        switchMap(request => this.authService.signUp(request)
+          .pipe(
+            map(response => signUpSuccess({})),
+            catchError((errorResponse: HttpErrorResponse) => {
+              return of(signUpFailure({payload: {response: errorResponse.error}}));
+            })
+          )
+        )
+      )
+  );
+
+  signUpSuccess$ = createEffect(() =>
+      this.actions$
+        .pipe(
+          ofType(AuthActions.signUpSuccess),
+          tap(() => this.router.navigateByUrl('/sign-in')),
+          tap(() => this.snackBar.open('Sign up successful. Now You can sign in.', 'Close', {
+            duration: 10_000
+          }))
+        )
+    , {dispatch: false});
+
+  constructor(
+    private actions$: Actions,
+    private authService: fromCoreServices.AuthService,
+    private router: Router,
+    private snackBar: MatSnackBar) {
   }
 
 }

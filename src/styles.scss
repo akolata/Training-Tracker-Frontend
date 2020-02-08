@@ -36,6 +36,6 @@ html {
   }
 
   @include respond(big-desktop) {
-    font-size: 125%; //1rem = 20px, 20px/16px
+    font-size: 112.5%; //1rem = 20px, 20px/16px
   }
 }

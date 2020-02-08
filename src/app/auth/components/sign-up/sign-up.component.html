@@ -1,1 +1,50 @@
-<p>sign-up works!</p>
+<h1>Sign Up</h1>
+
+<form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+  <mat-form-field>
+    <input type="text" matInput placeholder="First name" formControlName="firstName">
+    <mat-error *ngIf="signUpForm.get('firstName').invalid">
+      {{getErrorMessage('firstName', 'First name', signUpForm)}}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input type="text" matInput placeholder="Last name" formControlName="lastName">
+    <mat-error *ngIf="signUpForm.get('lastName').invalid">
+      {{getErrorMessage('lastName', 'Last name', signUpForm)}}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input type="text" matInput placeholder="Email" formControlName="email">
+    <mat-error *ngIf="signUpForm.get('email').invalid">
+      {{getErrorMessage('email', 'Email', signUpForm)}}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input type="text" matInput placeholder="Username" formControlName="username">
+    <mat-error *ngIf="signUpForm.get('username').invalid">
+      {{getErrorMessage('username', 'Username', signUpForm)}}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input type="password" matInput placeholder="Password" formControlName="password">
+    <mat-error *ngIf="signUpForm.get('password').invalid">
+      {{getErrorMessage('password', 'Password', signUpForm)}}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input type="password" matInput placeholder="Repeat password" formControlName="repeatedPassword">
+    <mat-error *ngIf="signUpForm.get('repeatedPassword').invalid">
+      {{getErrorMessage('repeatedPassword', 'Password', signUpForm)}}
+    </mat-error>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit" [disabled]="signUpForm.invalid">Sign up</button>
+</form>
+<p class="global-error">
+  <span *ngIf="signUpError$ | async as signUpError">{{signUpError}}</span>
+</p>

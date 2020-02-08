@@ -1,0 +1,18 @@
+h1 {
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  & > * {
+    margin-bottom: 1rem;
+  }
+}
+
+
+p.global-error {
+  height: 1rem;
+}
