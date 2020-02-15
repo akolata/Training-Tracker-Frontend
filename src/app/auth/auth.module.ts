@@ -7,8 +7,8 @@ import {StoreModule} from '@ngrx/store';
 import * as fromAuth from './reducers';
 import {SharedModule} from '../shared/shared.module';
 import {EffectsModule} from '@ngrx/effects';
-import {CoreModule} from '../core/core.module';
-import {MaterialModule} from '../material/material.module';
+import {CoreModule} from '@app/core/core.module';
+import {MaterialModule} from '@app/material/material.module';
 
 
 @NgModule({

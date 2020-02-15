@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import * as fromCoreServices from '../../core/services';
-import {AuthActions} from './auth-action-types';
+import * as fromCoreServices from '@app/core/services';
+import * as fromAuthStore from './auth-action-types';
 import {catchError, map, switchMap, tap} from 'rxjs/operators';
 import * as fromAuthModel from '../model';
 import {signInFailure, signInSuccess, signUpFailure, signUpSuccess} from './auth.actions';
@@ -17,7 +17,7 @@ export class AuthEffects {
   signIn$ = createEffect(() =>
     this.actions$
       .pipe(
-        ofType(AuthActions.signIn),
+        ofType(fromAuthStore.AuthActions.signIn),
         map(action => {
           const request: fromAuthModel.SignInRequest = action.payload.form;
           return request;
@@ -32,7 +32,7 @@ export class AuthEffects {
 
   signInSuccess$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthActions.signInSuccess),
+      ofType(fromAuthStore.AuthActions.signInSuccess),
       map(action => action.payload.response),
       tap(response => this.authService.saveToken(response.accessToken)),
       tap(() => this.router.navigateByUrl('/user'))
@@ -41,7 +41,7 @@ export class AuthEffects {
   signUp$ = createEffect(() =>
     this.actions$
       .pipe(
-        ofType(AuthActions.signUp),
+        ofType(fromAuthStore.AuthActions.signUp),
         map(action => {
           const request: fromAuthModel.SignUpRequest = action.payload.form;
           return request;
@@ -50,7 +50,13 @@ export class AuthEffects {
           .pipe(
             map(response => signUpSuccess({})),
             catchError((errorResponse: HttpErrorResponse) => {
-              return of(signUpFailure({payload: {response: errorResponse.error}}));
+              if (errorResponse.error.hasOwnProperty('errors')) {
+                const firstError = Object.keys(errorResponse.error.errors)[0];
+                const errorMsg = errorResponse.error.errors[firstError][0];
+                return of(signUpFailure({payload: {response: {errorMsg}}}));
+              } else {
+                return of(signUpFailure({payload: {response: errorResponse.error}}));
+              }
             })
           )
         )
@@ -60,7 +66,7 @@ export class AuthEffects {
   signUpSuccess$ = createEffect(() =>
       this.actions$
         .pipe(
-          ofType(AuthActions.signUpSuccess),
+          ofType(fromAuthStore.AuthActions.signUpSuccess),
           tap(() => this.router.navigateByUrl('/sign-in')),
           tap(() => this.snackBar.open('Sign up successful. Now You can sign in.', 'Close', {
             duration: 10_000
