@@ -50,7 +50,13 @@ export class AuthEffects {
           .pipe(
             map(response => signUpSuccess({})),
             catchError((errorResponse: HttpErrorResponse) => {
-              return of(signUpFailure({payload: {response: errorResponse.error}}));
+              if (errorResponse.error.hasOwnProperty('errors')) {
+                const firstError = Object.keys(errorResponse.error.errors)[0];
+                const errorMsg = errorResponse.error.errors[firstError][0];
+                return of(signUpFailure({payload: {response: {errorMsg}}}));
+              } else {
+                return of(signUpFailure({payload: {response: errorResponse.error}}));
+              }
             })
           )
         )
