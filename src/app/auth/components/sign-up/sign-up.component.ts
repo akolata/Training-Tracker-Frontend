@@ -6,6 +6,7 @@ import * as fromModel from '../../model';
 import * as fromCoreComponents from '../../../core/components';
 import * as fromCoreServices from '../../../core/services';
 import * as fromAuthStore from '../../reducers';
+import * as fromCoreValidators from '../../../core/validators';
 import {Observable} from 'rxjs';
 
 @Component({
@@ -21,7 +22,8 @@ export class SignUpComponent extends fromCoreComponents.BaseComponent implements
   constructor(
     private fb: FormBuilder,
     private store: Store<fromGlobalStore.AppState>,
-    errorMessageResolverService: fromCoreServices.ErrorMessageResolverService) {
+    errorMessageResolverService: fromCoreServices.ErrorMessageResolverService,
+    private validationService: fromCoreServices.ValidationService) {
     super(errorMessageResolverService);
     this.signUpForm = this.buildSignUpForm();
   }
@@ -37,12 +39,32 @@ export class SignUpComponent extends fromCoreComponents.BaseComponent implements
 
   private buildSignUpForm(): FormGroup {
     return this.fb.group({
-      'firstName': ['', [Validators.required, Validators.minLength(2), Validators.maxLength(60)]],
-      'lastName': ['', [Validators.required, Validators.minLength(2), Validators.maxLength(60)]],
-      'email': ['', [Validators.required, Validators.email, Validators.maxLength(200)]],
-      'username': ['', [Validators.required, Validators.minLength(2), Validators.maxLength(60)]],
-      'password': ['', [Validators.required, Validators.minLength(8), Validators.maxLength(60)]],
-      'repeatedPassword': ['', [Validators.required, Validators.minLength(8), Validators.maxLength(60)]],
+      'firstName': [
+        '',
+        [Validators.required, Validators.minLength(2), Validators.maxLength(60)]
+      ],
+      'lastName': [
+        '',
+        [Validators.required, Validators.minLength(2), Validators.maxLength(60)]
+      ],
+      'email': [
+        '',
+        [Validators.required, Validators.email, Validators.maxLength(200)],
+        [fromCoreValidators.TTAsyncValidators.emailExists(this.validationService)]
+      ],
+      'username': [
+        '',
+        [Validators.required, Validators.minLength(2), Validators.maxLength(60)],
+        [fromCoreValidators.TTAsyncValidators.usernameExists(this.validationService)]
+      ],
+      'password': [
+        '',
+        [Validators.required, Validators.minLength(8), Validators.maxLength(60)]
+      ],
+      'repeatedPassword': [
+        '',
+        [Validators.required, Validators.minLength(8), Validators.maxLength(60)]
+      ],
     });
   }
 }
