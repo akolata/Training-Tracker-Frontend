@@ -22,7 +22,7 @@ import {MaterialModule} from '@app/material/material.module';
     CoreModule,
     MaterialModule,
     AuthRoutingModule,
-    StoreModule.forFeature(fromAuth.authFeatureKey, fromAuth.authReducer),
+    StoreModule.forFeature(fromAuth.authFeatureKey, fromAuth.reducer),
     EffectsModule.forFeature([fromAuth.AuthEffects])
   ]
 })

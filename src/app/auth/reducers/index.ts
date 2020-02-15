@@ -20,6 +20,10 @@ export const authReducer = createReducer(
   on(AuthActions.signUpSuccess, state => ({...state, signUpFailureErrorMsg: undefined}))
 );
 
+export function reducer(state, action) {
+  return authReducer(state, action);
+}
+
 export * from './auth.actions';
 export * from './auth-action-types';
 export * from './auth.selector';
