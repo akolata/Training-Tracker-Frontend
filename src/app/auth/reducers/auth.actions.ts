@@ -1,15 +1,15 @@
 import {createAction, props} from '@ngrx/store';
-import * as fromModel from '../model';
-import * as fromCoreModel from '../../core/model';
+import * as fromAuthModel from '../model';
+import * as fromCoreModel from '@app/core/model';
 
 export const signIn = createAction(
   '[Sign In Page] Sign In',
-  props<{ payload: { form: fromModel.SignInForm } }>()
+  props<{ payload: { form: fromAuthModel.SignInForm } }>()
 );
 
 export const signInSuccess = createAction(
   '[Sign In Page] Sign In Success',
-  props<{ payload: { response: fromModel.SignInResponse } }>()
+  props<{ payload: { response: fromAuthModel.SignInResponse } }>()
 );
 
 export const signInFailure = createAction(
@@ -19,7 +19,7 @@ export const signInFailure = createAction(
 
 export const signUp = createAction(
   '[Sign Up Page] Sign Up',
-  props<{ payload: { form: fromModel.SignUpForm } }>()
+  props<{ payload: { form: fromAuthModel.SignUpForm } }>()
 );
 
 export const signUpSuccess = createAction(
@@ -34,7 +34,7 @@ export const signUpFailure = createAction(
 
 export const getUserProfile = createAction(
   '[Sign In Page] Get User Profile',
-  props<{ payload: { user: fromModel.User } }>()
+  props<{ payload: { user: fromAuthModel.User } }>()
 );
 
 export const signOut = createAction(

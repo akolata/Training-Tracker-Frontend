@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import * as fromModel from '../../model';
+import * as fromAuthModel from '../../model';
 import * as fromAuthStore from '../../reducers';
-import {AuthActions} from '../../reducers';
-import * as fromGlobalStore from '../../../reducers';
+import * as fromGlobalStore from '@app/reducers';
 import {select, Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
 
@@ -26,8 +25,8 @@ export class SignInComponent implements OnInit {
   }
 
   onSignInSubmit() {
-    const form: fromModel.SignInForm = this.signInForm.value;
-    this.store.dispatch(AuthActions.signIn({payload: {form}}));
+    const form: fromAuthModel.SignInForm = this.signInForm.value;
+    this.store.dispatch(fromAuthStore.AuthActions.signIn({payload: {form}}));
   }
 
   private buildSignInForm(): FormGroup {

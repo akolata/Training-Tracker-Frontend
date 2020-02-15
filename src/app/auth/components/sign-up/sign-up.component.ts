@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {select, Store} from '@ngrx/store';
-import * as fromGlobalStore from '../../../reducers';
+import * as fromGlobalStore from '@app/reducers';
 import * as fromModel from '../../model';
-import * as fromCoreComponents from '../../../core/components';
-import * as fromCoreServices from '../../../core/services';
+import * as fromCoreComponents from '@app/core/components';
+import * as fromCoreServices from '@app/core/services';
 import * as fromAuthStore from '../../reducers';
-import * as fromCoreValidators from '../../../core/validators';
+import * as fromCoreValidators from '@app/core/validators';
 import {Observable} from 'rxjs';
 
 @Component({
