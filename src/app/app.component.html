@@ -12,6 +12,7 @@
       </ng-container>
       <ng-container *ngIf="displayIfSignedIn()">
         <a mat-button [routerLink]="'/user'">Profile</a>
+        <a mat-button [routerLink]="'/gym'">Gyms</a>
         <a mat-button (click)="signOut()"> Sign out </a>
       </ng-container>
     </div>
@@ -28,6 +29,7 @@
       </ng-container>
       <ng-container *ngIf="displayIfSignedIn()">
         <a mat-list-item [routerLink]="'/user'">Profile</a>
+        <a mat-button [routerLink]="'/gym'">Gyms</a>
         <a mat-list-item (click)="signOut()">Sign out</a>
       </ng-container>
     </mat-nav-list>

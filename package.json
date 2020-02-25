@@ -3,9 +3,11 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --aot",
     "build": "ng build",
-    "test": "ng test",
+    "build:prod": "ng build --configuration production --build-optimizer --vendor-chunk",
+    "test": "ng test --browsers ChromeHeadless --watch=false",
+    "test:watch": "ng test --browsers ChromeHeadless",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
