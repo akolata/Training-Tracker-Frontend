@@ -15,6 +15,11 @@ const routes: Routes = [
     canLoad: [fromCoreGuards.AuthGuard]
   },
   {
+    path: 'training',
+    loadChildren: () => import('./training/training.module').then(module => module.TrainingModule),
+    canLoad: [fromCoreGuards.AuthGuard]
+  },
+  {
     path: '**',
     redirectTo: '/not-found'
   }
