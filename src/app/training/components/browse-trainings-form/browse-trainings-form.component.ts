@@ -1,6 +1,9 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import * as fromTrainingsModel from '../../model';
+import * as fromTrainingsStore from '../../store';
+import {Store} from "@ngrx/store";
+import {take, tap} from "rxjs/operators";
 
 @Component({
   selector: 'tt-browse-trainings-form',
@@ -14,12 +17,17 @@ export class BrowseTrainingsFormComponent implements OnInit {
 
   form: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private store: Store<fromTrainingsStore.TrainingsState>) {
     this.formSubmitted = new EventEmitter<fromTrainingsModel.SearchTrainingsForm>();
   }
 
   ngOnInit() {
     this.form = this.buildForm();
+    this.store.select(fromTrainingsStore.selectBrowseTrainingsForm)
+      .pipe(
+        take(1),
+        tap(form => this.form.patchValue(form))
+      ).subscribe();
   }
 
   onSubmit(): void {
