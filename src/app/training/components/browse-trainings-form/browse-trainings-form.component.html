@@ -1,1 +1,15 @@
-<p>browse-trainings-form works!</p>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <mat-form-field >
+    <mat-label>Id</mat-label>
+    <input matInput formControlName="id">
+  </mat-form-field>
+  <mat-form-field >
+    <mat-label>Name</mat-label>
+    <input matInput formControlName="name">
+  </mat-form-field>
+  <mat-form-field >
+    <mat-label>Additional Info</mat-label>
+    <input matInput formControlName="additionalInfo">
+  </mat-form-field>
+  <button type="submit" mat-raised-button>Search</button>
+</form>
