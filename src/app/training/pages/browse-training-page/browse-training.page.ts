@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as fromTrainingsModel from '../../model';
 import * as fromTrainingsStore from '../../store';
 import {Store} from "@ngrx/store";
+import {TrainingsDataSource} from "@app/training/pages/browse-training-page/trainings.data-source";
 
 @Component({
   selector: 'tt-browse-training-page',
@@ -10,7 +11,11 @@ import {Store} from "@ngrx/store";
 })
 export class BrowseTrainingPage implements OnInit {
 
-  constructor(private store: Store<any>) { }
+  datasource;
+
+  constructor(private store: Store<any>) {
+    this.datasource = new TrainingsDataSource(store);
+  }
 
   ngOnInit() {
   }

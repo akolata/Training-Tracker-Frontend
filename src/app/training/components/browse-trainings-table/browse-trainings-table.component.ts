@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import * as fromTrainingModel from '../../model';
+import {DataSource} from "@angular/cdk/collections";
 
 @Component({
   selector: 'tt-browse-trainings-table',
@@ -7,21 +8,11 @@ import * as fromTrainingModel from '../../model';
   styleUrls: ['./browse-trainings-table.component.scss']
 })
 export class BrowseTrainingsTableComponent implements OnInit {
+
+  @Input()
+  dataSource: DataSource<fromTrainingModel.TrainingRow>;
+
   displayedColumns: string[] = ['id', 'name', 'date', 'additionalInfo'];
-   data: fromTrainingModel.TrainingRow[] = [
-    {
-      id: 1,
-      name: 'T1',
-      additionalInfo: 'A1',
-      date: new Date()
-    },
-     {
-       id: 2,
-       name: 'T2',
-       additionalInfo: 'A2',
-       date: new Date()
-     },
-  ];
   constructor() { }
 
   ngOnInit() {
