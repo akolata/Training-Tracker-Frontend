@@ -1,6 +1,9 @@
-export function trimFormValues(form: any) {
+import * as fromSharedModel from '../model';
+import {Query} from "@angular/core";
+
+export function toHttpParams(obj: any) {
   const params: any = {};
-  Object.entries(form)
+  Object.entries(obj)
     .forEach((entry: any[]) => {
       let value = entry[1];
       if (value !== null && value !== '') {
@@ -23,3 +26,12 @@ export function trimFormValues(form: any) {
   return params;
 }
 
+export function sortQueryToHttpParams(sortQuery: fromSharedModel.SortQuery) {
+  if (!sortQuery || !sortQuery.property) {
+    return {};
+  }
+  if (!sortQuery.direction) {
+    return {sort: sortQuery.property};
+  }
+  return {sort: `${sortQuery.property},${sortQuery.direction}`};
+}

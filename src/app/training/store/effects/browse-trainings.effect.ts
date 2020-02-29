@@ -17,14 +17,23 @@ export class BrowseTrainingsEffects {
     )
   );
 
+  setSearchTrainingTableState = createEffect(
+    () => this.actions$.pipe(
+      ofType(fromTrainingsActions.setSearchTrainingTableState),
+      map(() => fromTrainingsActions.searchTrainings())
+    )
+  );
+
   searchTrainings$ = createEffect(
     () => this.actions$
       .pipe(
         ofType(fromTrainingsActions.searchTrainings),
-        withLatestFrom(this.store$.select(fromTrainingsSelectors.selectBrowseTrainingsForm)),
-        map(entry => entry[1]),
-        concatMap(form =>
-          this.trainingsService.browseTrainings(form)),
+        withLatestFrom(
+          this.store$.select(fromTrainingsSelectors.selectBrowseTrainingsForm),
+          this.store$.select(fromTrainingsSelectors.selectTrainingsTableState)
+        ),
+        concatMap(entry =>
+          this.trainingsService.browseTrainings(entry[1], entry[2].page, entry[2].sort)),
         map(response => fromTrainingsActions.searchTrainingsSuccess({trainings: response.trainings}))
       )
   );
