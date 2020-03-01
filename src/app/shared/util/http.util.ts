@@ -1,5 +1,5 @@
 import * as fromSharedModel from '../model';
-import {Query} from "@angular/core";
+import {HttpHeaders} from "@angular/common/http";
 
 export function toHttpParams(obj: any) {
   const params: any = {};
@@ -22,7 +22,7 @@ export function toHttpParams(obj: any) {
 
       }
 
-  });
+    });
   return params;
 }
 
@@ -34,4 +34,25 @@ export function sortQueryToHttpParams(sortQuery: fromSharedModel.SortQuery) {
     return {sort: sortQuery.property};
   }
   return {sort: `${sortQuery.property},${sortQuery.direction}`};
+}
+
+export function pageQueryToHttpParams(pageQuery: fromSharedModel.PageQuery) {
+  let query = {...pageQuery};
+  if (query.page) {
+    query.page += 1;
+  }
+  return query;
+}
+
+export function httpHeadersToPagination(headers: HttpHeaders) {
+  let pageNumber = +headers.get('Page-Number');
+  if (pageNumber) {
+    pageNumber -= 1;
+  }
+  return {
+    pageNumber,
+    pageSize: +headers.get('Page-Size'),
+    totalPages: +headers.get('Page-Total-Pages'),
+    totalElements: +headers.get('Page-Total-Elements')
+  };
 }

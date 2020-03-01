@@ -14,6 +14,10 @@ export const selectTrainingsTableState = createSelector(
   selectBrowseTrainingsFeature,
   (state: fromTrainingsReducer.BrowseTrainingsState) => state.tableState
 );
+export const selectTrainingsPaginationState = createSelector(
+  selectBrowseTrainingsFeature,
+  (state: fromTrainingsReducer.BrowseTrainingsState) => state.paginationState
+);
 export const selectTrainings = createSelector(
   selectBrowseTrainingsFeature,
   (state: fromTrainingsReducer.BrowseTrainingsState) => state.trainings

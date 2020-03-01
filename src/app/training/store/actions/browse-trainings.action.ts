@@ -3,18 +3,22 @@ import * as fromTrainingsModel from '../../model';
 import * as fromSharedModel from '@tt-shared/model';
 
 export const setSearchTrainingsForm = createAction(
-  '[Browse Tickets Page] Set form',
-  props<{ form: fromTrainingsModel.SearchTrainingsForm }>()
+    '[Browse Tickets Page] Set form',
+    props<{ form: fromTrainingsModel.SearchTrainingsForm }>()
 );
 export const setSearchTrainingTableState = createAction(
-  '[Browse Tickets Page] Set table state',
-  props<{ tableState: fromSharedModel.TableState }>()
+    '[Browse Tickets Page] Set table state',
+    props<{ tableState: fromSharedModel.TableState }>()
+);
+export const setSearchTrainingsPaginationState = createAction(
+    '[Browse Trainings Effect] Search Trainings Pagination state',
+    props<{ paginationState: fromSharedModel.PaginationState }>()
 );
 export const searchTrainings = createAction('[Browse Tickets Page] Search Trainings');
 export const searchTrainingsSuccess = createAction(
-  '[Browse Trainings Effect] Search Trainings Success',
-  props<{ trainings: fromTrainingsModel.Training[] }>()
+    '[Browse Trainings Effect] Search Trainings Success',
+    props<{ trainings: fromTrainingsModel.Training[] }>()
 );
 export const searchTrainingsFailure = createAction(
-  '[Browse Trainings Effect] Search Trainings Failure'
+    '[Browse Trainings Effect] Search Trainings Failure'
 );

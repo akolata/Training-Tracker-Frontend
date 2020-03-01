@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpResponse} from '@angular/common/http';
 import * as fromTrainingsModel from '../model';
 import * as fromSharedModel from '@tt-shared/model';
 import * as fromSharedUtil from '@tt-shared/util';
@@ -15,14 +15,15 @@ export class TrainingsService {
     form: fromTrainingsModel.SearchTrainingsForm,
     pageQuery: fromSharedModel.PageQuery = {},
     sortQuery: fromSharedModel.SortQuery = {},
-    userId: number): Observable<fromTrainingsModel.SearchTrainingsResponse> {
+    userId: number): Observable<HttpResponse<fromTrainingsModel.SearchTrainingsResponse>> {
     const formParams = fromSharedUtil.toHttpParams(form);
-    const pageParams = fromSharedUtil.toHttpParams(pageQuery);
+    const pageParams = fromSharedUtil.pageQueryToHttpParams(pageQuery);
     const sortParams = fromSharedUtil.sortQueryToHttpParams(sortQuery);
     const params = {
       ...formParams, ...pageParams, ...sortParams
     };
-    return this.http.get<fromTrainingsModel.SearchTrainingsResponse>(`api/users/${userId}/trainings`, {params});
+    return this.http.get<fromTrainingsModel.SearchTrainingsResponse>(`api/users/${userId}/trainings`, {params,
+    observe: "response"});
   }
 
 }

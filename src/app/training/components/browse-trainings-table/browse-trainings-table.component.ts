@@ -2,12 +2,14 @@ import {AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output
 import * as fromTrainingModel from '../../model';
 import * as fromSharedModel from '@tt-shared/model';
 import * as fromSharedUtils from '@tt-shared/util';
+import * as fromTrainingStore from '../../store';
 import {DataSource} from '@angular/cdk/collections';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
-import {merge, Subject} from 'rxjs';
-import {takeUntil, tap} from 'rxjs/operators';
+import {merge, Observable, Subject} from 'rxjs';
+import {take, takeUntil, tap} from 'rxjs/operators';
 import {Sort} from '@angular/material/sort/typings/sort';
+import {Store} from "@ngrx/store";
 
 @Component({
   selector: 'tt-browse-trainings-table',
@@ -25,16 +27,26 @@ export class BrowseTrainingsTableComponent implements OnInit, AfterViewInit, OnD
   paginator: MatPaginator;
   @ViewChild(MatSort, {static: true})
   sort: MatSort;
+  paginationState$: Observable<fromSharedModel.PaginationState>;
 
   displayedColumns: string[] = ['id', 'name', 'date', 'additionalInfo'];
+  pageSizes = fromSharedModel.TABLE_PAGE_SIZES;
   private unsubscribe: Subject<void>;
 
-  constructor() {
+  constructor(private store: Store<fromTrainingStore.TrainingsState>) {
     this.unsubscribe = new Subject<void>();
     this.stateChanged = new EventEmitter<fromSharedModel.TableState>();
   }
 
   ngOnInit() {
+    this.store.select(fromTrainingStore.selectTrainingsTableState).pipe(
+      take(1),
+      tap(state => {
+        this.paginator.pageSize = state.page.size;
+        this.paginator.pageIndex = state.page.page;
+      })
+    ).subscribe();
+    this.paginationState$ = this.store.select(fromTrainingStore.selectTrainingsPaginationState);
   }
 
   ngAfterViewInit(): void {
