@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import * as fromCoreServices from '@app/core/services';
+import * as fromCoreModel from '@tt-core/model';
 import * as fromAuthStore from './auth-action-types';
 import {catchError, map, switchMap, tap} from 'rxjs/operators';
 import * as fromAuthModel from '../model';
@@ -25,7 +26,7 @@ export class AuthEffects {
         switchMap(request => this.authService.signIn(request)
           .pipe(
             map((response: fromAuthModel.SignInResponse) => signInSuccess({payload: {response}})),
-            catchError(() => of(signInFailure({})))
+            catchError(() => of(signInFailure()))
           )
         )
       ));
@@ -35,8 +36,19 @@ export class AuthEffects {
       ofType(fromAuthStore.AuthActions.signInSuccess),
       map(action => action.payload.response),
       tap(response => this.authService.saveToken(response.accessToken)),
-      tap(() => this.router.navigateByUrl('/user'))
-    ), {dispatch: false});
+      tap(response => console.log(this.authService.getUserId(response.accessToken))),
+      tap(() => this.router.navigateByUrl('/user')),
+      map(response => fromAuthStore.AuthActions.getUserProfile({id: this.authService.getUserId(response.accessToken)}))
+    ));
+
+  getUserProfile$ = createEffect(() => this.actions$.pipe(
+    ofType(fromAuthStore.AuthActions.getUserProfile),
+    switchMap(action => this.authService.getUserProfile(action.id).pipe(
+      map((response: fromCoreModel.UserProfileResponse) => fromAuthStore.AuthActions.getUserProfileSuccess({user: response.user})),
+      catchError(() => of(fromAuthStore.AuthActions.getUserProfileFailure()))
+      )
+    )
+  ));
 
   signUp$ = createEffect(() =>
     this.actions$
@@ -48,7 +60,7 @@ export class AuthEffects {
         }),
         switchMap(request => this.authService.signUp(request)
           .pipe(
-            map(response => signUpSuccess({})),
+            map(response => signUpSuccess()),
             catchError((errorResponse: HttpErrorResponse) => {
               if (errorResponse.error.hasOwnProperty('errors')) {
                 const firstError = Object.keys(errorResponse.error.errors)[0];

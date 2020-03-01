@@ -12,30 +12,31 @@ export const signInSuccess = createAction(
   props<{ payload: { response: fromAuthModel.SignInResponse } }>()
 );
 
-export const signInFailure = createAction(
-  '[Sign In Page] Sign In Failure',
-  props()
-);
+export const signInFailure = createAction('[Sign In Page] Sign In Failure');
 
 export const signUp = createAction(
   '[Sign Up Page] Sign Up',
   props<{ payload: { form: fromAuthModel.SignUpForm } }>()
 );
 
-export const signUpSuccess = createAction(
-  '[Sign Up Page] Sign Up Success',
-  props()
-);
+export const signUpSuccess = createAction('[Auth Effect] Sign Up Success');
 
 export const signUpFailure = createAction(
-  '[Sign Up Page] Sign Up Failure',
+  '[Auth Effect] Sign Up Failure',
   props<{ payload: { response: fromCoreModel.ApiGenericClientErrorResponse } }>()
 );
 
 export const getUserProfile = createAction(
-  '[Sign In Page] Get User Profile',
-  props<{ payload: { user: fromAuthModel.User } }>()
+  '[Auth Effect] Get User Profile',
+  props<{ id: number }>()
 );
+
+export const getUserProfileSuccess = createAction(
+  '[Auth Effect] Get user profile success',
+  props<{user: fromCoreModel.User}>()
+);
+
+export const getUserProfileFailure = createAction('[AuthEffect] Get user profile failure');
 
 export const signOut = createAction(
   '[Top Menu] Sign Out'

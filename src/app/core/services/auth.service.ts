@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import * as fromModel from '../../auth/model';
+import * as fromCoreModel from '@tt-core/model';
 import {HttpClient} from '@angular/common/http';
 import {JwtHelperService} from "@auth0/angular-jwt";
 
@@ -51,5 +52,9 @@ export class AuthService {
 
   signUp(request: fromModel.SignUpRequest): Observable<any> {
     return this.http.post<any>('/api/auth/sign-up', request);
+  }
+
+  getUserProfile(id: number): Observable<fromCoreModel.UserProfileResponse> {
+    return this.http.get<fromCoreModel.UserProfileResponse>(`/api/users/${id}`);
   }
 }
