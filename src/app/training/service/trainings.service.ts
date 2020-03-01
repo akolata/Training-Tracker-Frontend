@@ -14,14 +14,15 @@ export class TrainingsService {
   browseTrainings(
     form: fromTrainingsModel.SearchTrainingsForm,
     pageQuery: fromSharedModel.PageQuery = {},
-    sortQuery: fromSharedModel.SortQuery = {}): Observable<fromTrainingsModel.SearchTrainingsResponse> {
+    sortQuery: fromSharedModel.SortQuery = {},
+    userId: number): Observable<fromTrainingsModel.SearchTrainingsResponse> {
     const formParams = fromSharedUtil.toHttpParams(form);
     const pageParams = fromSharedUtil.toHttpParams(pageQuery);
     const sortParams = fromSharedUtil.sortQueryToHttpParams(sortQuery);
     const params = {
       ...formParams, ...pageParams, ...sortParams
     };
-    return this.http.get<fromTrainingsModel.SearchTrainingsResponse>('api/trainings', {params});
+    return this.http.get<fromTrainingsModel.SearchTrainingsResponse>(`api/users/${userId}/trainings`, {params});
   }
 
 }
