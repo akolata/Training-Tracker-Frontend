@@ -4,18 +4,11 @@ import * as fromTrainingsServices from '../../service';
 import * as fromTrainingsActions from '../actions';
 import * as fromTrainingsSelectors from '../selectors';
 import * as fromTrainingsReducers from '../reducer';
-import {concatMap, map, tap, withLatestFrom} from 'rxjs/operators';
+import {concatMap, map, withLatestFrom} from 'rxjs/operators';
 import {Store} from '@ngrx/store';
 
 @Injectable()
 export class BrowseTrainingsEffects {
-
-  setSearchTrainingsForm$ = createEffect(
-    () => this.actions$.pipe(
-      ofType(fromTrainingsActions.setSearchTrainingsForm),
-      map(() => fromTrainingsActions.searchTrainings())
-    )
-  );
 
   setSearchTrainingTableState = createEffect(
     () => this.actions$.pipe(

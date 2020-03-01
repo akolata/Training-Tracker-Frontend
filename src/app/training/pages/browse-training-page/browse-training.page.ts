@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import * as fromTrainingsModel from '../../model';
 import * as fromTrainingsStore from '../../store';
 import * as fromSharedModel from '@tt-shared/model';
 import {Store} from '@ngrx/store';
@@ -18,8 +17,8 @@ export class BrowseTrainingPage {
     this.datasource = new TrainingsDataSource(store);
   }
 
-  searchTrainings(form: fromTrainingsModel.SearchTrainingsForm): void {
-    this.store.dispatch(fromTrainingsStore.BrowseTrainingsActions.setSearchTrainingsForm({form}));
+  searchTrainings(): void {
+    this.store.dispatch(fromTrainingsStore.searchTrainings());
   }
 
   onTableStateChanged(tableState: fromSharedModel.TableState): void {
