@@ -10,6 +10,10 @@ export const selectBrowseTrainingsForm = createSelector(
   selectBrowseTrainingsFeature,
   (state: fromTrainingsReducer.BrowseTrainingsState) => state.form
 );
+export const selectTrainingsLoading = createSelector(
+  selectBrowseTrainingsFeature,
+  (state: fromTrainingsReducer.BrowseTrainingsState) => state.isLoading
+);
 export const selectTrainingsTableState = createSelector(
   selectBrowseTrainingsFeature,
   (state: fromTrainingsReducer.BrowseTrainingsState) => state.tableState

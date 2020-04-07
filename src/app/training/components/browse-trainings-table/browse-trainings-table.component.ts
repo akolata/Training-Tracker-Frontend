@@ -28,6 +28,7 @@ export class BrowseTrainingsTableComponent implements OnInit, AfterViewInit, OnD
   @ViewChild(MatSort, {static: true})
   sort: MatSort;
   paginationState$: Observable<fromSharedModel.PaginationState>;
+  isLoading$: Observable<boolean>;
 
   displayedColumns: string[] = ['id', 'name', 'date', 'additionalInfo'];
   pageSizes = fromSharedModel.TABLE_PAGE_SIZES;
@@ -47,6 +48,7 @@ export class BrowseTrainingsTableComponent implements OnInit, AfterViewInit, OnD
       })
     ).subscribe();
     this.paginationState$ = this.store.select(fromTrainingStore.selectTrainingsPaginationState);
+    this.isLoading$ = this.store.select(fromTrainingStore.selectTrainingsLoading);
   }
 
   ngAfterViewInit(): void {

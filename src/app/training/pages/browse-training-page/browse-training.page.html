@@ -1,4 +1,7 @@
-<section>
-  <tt-browse-trainings-form (formSubmitted)="searchTrainings()"></tt-browse-trainings-form>
-</section>
-<tt-browse-trainings-table [dataSource]="datasource" (stateChanged)="onTableStateChanged($event)"></tt-browse-trainings-table>
+<div id="page-wrapper">
+  <h1>Browse trainings</h1>
+  <section>
+    <tt-browse-trainings-form (formSubmitted)="searchTrainings()"></tt-browse-trainings-form>
+    <tt-browse-trainings-table [dataSource]="datasource" (stateChanged)="onTableStateChanged($event)"></tt-browse-trainings-table>
+  </section>
+</div>

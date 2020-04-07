@@ -11,5 +11,10 @@
     <mat-label>Additional Info</mat-label>
     <input matInput formControlName="additionalInfo">
   </mat-form-field>
+  <mat-form-field>
+    <input matInput [matDatepicker]="myDatepicker" formControlName="date">
+    <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+    <mat-datepicker #myDatepicker></mat-datepicker>
+  </mat-form-field>
   <button type="submit" mat-raised-button>Search</button>
 </form>

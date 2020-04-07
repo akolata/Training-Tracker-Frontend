@@ -1,0 +1,15 @@
+form {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: baseline;
+
+  mat-form-field {
+    width: 10rem;
+    margin-right: 1rem;
+  }
+
+  button {
+    width: 10rem;
+  }
+}

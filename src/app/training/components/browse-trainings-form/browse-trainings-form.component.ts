@@ -32,7 +32,8 @@ export class BrowseTrainingsFormComponent implements OnInit {
     return this.fb.group({
       'name': '',
       'additionalInfo': '',
-      'id': ''
+      'id': '',
+      date: null
     });
   }
 
