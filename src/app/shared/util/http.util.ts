@@ -1,5 +1,6 @@
 import * as fromSharedModel from '../model';
 import {HttpHeaders} from "@angular/common/http";
+import * as moment from 'moment';
 
 export function toHttpParams(obj: any) {
   const params: any = {};
@@ -17,6 +18,8 @@ export function toHttpParams(obj: any) {
           case 'Date':
             value = (<Date>value).toISOString();
             break;
+          case 'Moment':
+            value = moment(value).toISOString();
         }
         params[entry[0]] = value;
 
