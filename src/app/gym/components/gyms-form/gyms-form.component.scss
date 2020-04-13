@@ -1,0 +1,15 @@
+form {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+
+  mat-form-field {
+    width: 60%;
+  }
+
+  button {
+    margin-left: 4rem;
+    height: 2rem;
+    width: 8rem;
+  }
+}

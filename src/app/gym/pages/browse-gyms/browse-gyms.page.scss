@@ -1,0 +1,22 @@
+#gyms-page {
+  width: 80vw;
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+}
+
+#gym-actions-section {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+
+  #add-gym-btn {
+    height: 2rem;
+    width: 8rem;
+    margin-right: auto;
+  }
+
+  tt-gyms-form {
+    width: 80%;
+  }
+}

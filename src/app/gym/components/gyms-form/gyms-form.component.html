@@ -1,0 +1,6 @@
+<form [formGroup]="form" (ngSubmit)="search()" [connectForm]="formSelector">
+  <mat-form-field>
+    <input matInput placeholder="Type gym's name here..." formControlName="name">
+  </mat-form-field>
+  <button type="submit" mat-raised-button>Search</button>
+</form>
