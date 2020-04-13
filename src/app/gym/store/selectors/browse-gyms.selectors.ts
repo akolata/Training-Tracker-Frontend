@@ -10,3 +10,19 @@ export const selectBrowseGymsForm = createSelector(
   selectBrowseGymsState,
   (state: fromGymReducer.BrowseGymsState) => state.form
 );
+export const selectGyms = createSelector(
+  selectBrowseGymsState,
+  (state: fromGymReducer.BrowseGymsState) => state.gyms
+);
+export const selectIsLoading = createSelector(
+  selectBrowseGymsState,
+  (state: fromGymReducer.BrowseGymsState) => state.isLoading
+);
+export const selectBrowseGymsPaginationState = createSelector(
+  selectBrowseGymsState,
+  (state: fromGymReducer.BrowseGymsState) => state.paginationState
+);
+export const selectBrowseGymsTableState = createSelector(
+  selectBrowseGymsState,
+  (state: fromGymReducer.BrowseGymsState) => state.tableState
+);
