@@ -14,7 +14,6 @@ export class BrowseTrainingsFormComponent implements OnInit {
 
   form: FormGroup;
   formSelector = fromTrainingsStore.selectBrowseTrainingsForm;
-  formAction = fromTrainingsStore.setSearchTrainingsForm;
 
   constructor(private fb: FormBuilder) {
     this.formSubmitted = new EventEmitter<void>();
@@ -25,6 +24,7 @@ export class BrowseTrainingsFormComponent implements OnInit {
   }
 
   onSubmit(): void {
+    console.log(this.form.value);
     this.formSubmitted.emit();
   }
 

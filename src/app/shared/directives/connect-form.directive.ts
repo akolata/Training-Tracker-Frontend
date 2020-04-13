@@ -1,17 +1,15 @@
-import {Directive, Input, OnDestroy, OnInit} from "@angular/core";
+import {Directive, Input, OnDestroy, OnInit} from '@angular/core';
 import * as fromStore from '../../reducers';
-import {FormGroupDirective} from "@angular/forms";
-import {Store} from "@ngrx/store";
-import {debounceTime, take, takeUntil, tap} from "rxjs/operators";
-import {Subject} from "rxjs";
+import {FormGroupDirective} from '@angular/forms';
+import {Store} from '@ngrx/store';
+import {take, tap} from 'rxjs/operators';
+import {Subject} from 'rxjs';
 
 @Directive({
   selector: '[connectForm]'
 })
 export class ConnectFormDirective implements OnInit, OnDestroy {
   @Input('connectForm') selector;
-  @Input() debounce: number = 300;
-  @Input('formAction') action;
 
   unsubscribe: Subject<void>;
 
@@ -24,17 +22,6 @@ export class ConnectFormDirective implements OnInit, OnDestroy {
       take(1),
       tap(formValue => this.formGroupDirective.form.patchValue(formValue))
     ).subscribe();
-
-    this.formGroupDirective.form.valueChanges
-      .pipe(
-        debounceTime(this.debounce),
-        takeUntil(this.unsubscribe),
-        tap(formValue => {
-          this.store.dispatch(this.action({form: formValue}));
-          console.log(formValue);
-        })
-      ).subscribe();
-
   }
 
   ngOnDestroy(): void {
