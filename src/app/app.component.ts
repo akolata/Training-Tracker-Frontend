@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import * as fromCoreServices from './core/services';
-import * as fromAuthStore from '@app/auth/reducers';
 import {Router} from '@angular/router';
 import {Store} from '@ngrx/store';
+import {environment} from '@env/environment';
+import * as fromCoreServices from './core/services';
+import * as fromAuthStore from '@app/auth/reducers';
+import * as fromCoreStore from '@tt-core/store';
 
 @Component({
   selector: 'tt-root',
@@ -10,6 +12,8 @@ import {Store} from '@ngrx/store';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+
+  displayServerDetails: boolean;
 
   constructor(
     private router: Router,
@@ -25,6 +29,12 @@ export class AppComponent implements OnInit {
       const jwt = this.authService.getToken();
       const id = this.authService.getUserId(jwt);
       this.store.dispatch(fromAuthStore.getUserProfile({id}))
+    }
+
+    this.displayServerDetails = environment.displayServerDetails;
+    if (this.displayServerDetails) {
+      this.store.dispatch(fromCoreStore.CoreActions.getServerInfo());
+      this.store.dispatch(fromCoreStore.CoreActions.getServerStatus());
     }
   }
 
