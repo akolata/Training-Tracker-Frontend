@@ -1,0 +1,5 @@
+export enum ExerciseType {
+  CARDIO = 'CARDIO',
+  WEIGHT_LIFTING = 'WEIGHT_LIFTING',
+  GROUP_WORKOUT = 'GROUP_WORKOUT'
+}
