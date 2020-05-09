@@ -14,6 +14,7 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatMenuModule} from '@angular/material/menu';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     MatSortModule,
     MatDatepickerModule,
     MatMomentDateModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatMenuModule
   ]
 })
 export class MaterialModule {
