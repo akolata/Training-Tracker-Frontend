@@ -7,6 +7,7 @@ import {EffectsModule} from '@ngrx/effects';
 import * as fromExercisesComponents from './components';
 import * as fromExercisesPages from './pages';
 import * as fromExercisesServices from './services';
+import * as fromExercisesGuards from './guards';
 import * as fromExercisesStore from './store';
 
 
@@ -16,7 +17,8 @@ import * as fromExercisesStore from './store';
     ...fromExercisesPages.pages
   ],
   providers: [
-    ...fromExercisesServices.services
+    ...fromExercisesServices.services,
+    ...fromExercisesGuards.guards
   ],
   imports: [
     CommonModule,
