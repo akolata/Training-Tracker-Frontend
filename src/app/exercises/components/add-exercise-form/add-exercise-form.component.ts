@@ -1,9 +1,10 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {FormBuilder, FormGroup, NgForm, Validators} from '@angular/forms';
 import {Store} from '@ngrx/store';
 import {Observable, Subject} from 'rxjs';
 import {takeUntil, tap} from 'rxjs/operators';
 import {BaseComponent} from '@tt-core/components';
+import {Actions, ofType} from '@ngrx/effects';
 import * as fromSharedModels from '@tt-shared/model';
 import * as fromCoreModels from '@tt-core/model';
 import * as fromCoreServices from '@tt-core/services';
@@ -18,16 +19,21 @@ import * as fromExercisesStore from '../../store';
 })
 export class AddExerciseFormComponent extends BaseComponent implements OnInit, OnDestroy {
 
+  @ViewChild('addExerciseForm', {static: true})
+  private addExerciseForm: NgForm;
+
   form: FormGroup;
   types: fromSharedModels.SelectItem[] = [];
   errorMsg$: Observable<string>;
+  isPending$: Observable<boolean>;
 
   private unsubscribe: Subject<void>;
 
   constructor(
     errorsResolverService: fromCoreServices.ErrorMessageResolverService,
     private fb: FormBuilder,
-    private store: Store<any>) {
+    private store: Store<any>,
+    private actions$: Actions) {
     super(errorsResolverService);
     this.unsubscribe = new Subject<void>();
   }
@@ -47,7 +53,16 @@ export class AddExerciseFormComponent extends BaseComponent implements OnInit, O
         })
       )
       .subscribe();
+    this.actions$
+      .pipe(
+        ofType(fromExercisesStore.CreateExerciseActions.createExerciseSuccess),
+        takeUntil(this.unsubscribe),
+        tap(() => this.addExerciseForm.resetForm()
+        )
+      )
+      .subscribe();
     this.errorMsg$ = this.store.select(fromExercisesStore.selectCreateExerciseErrorMsg);
+    this.isPending$ = this.store.select(fromExercisesStore.selectExerciseCreationPending);
   }
 
   ngOnDestroy(): void {
