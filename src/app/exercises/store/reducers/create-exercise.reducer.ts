@@ -25,6 +25,9 @@ export const createExerciseReducer = createReducer(
   on(CreateExerciseActions.createExerciseSuccess, (state) => ({
     ...state,
     createExercisePending: false
+  })),
+  on(CreateExerciseActions.clearState, (state) => ({
+    ...initialCreateExerciseState
   }))
 );
 

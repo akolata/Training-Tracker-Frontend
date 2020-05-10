@@ -13,7 +13,8 @@ export const routes: Routes = [
   {
     path: 'add',
     component: fromExercisesPages.AddExercisePage,
-    canActivate: [fromCoreGuards.AuthGuard, fromExercisesGuards.LoadExercisesTypesGuard]
+    canActivate: [fromCoreGuards.AuthGuard, fromExercisesGuards.LoadExercisesTypesGuard],
+    canDeactivate: [fromExercisesGuards.AddExerciseGuard]
   },
   {
     path: 'browse',

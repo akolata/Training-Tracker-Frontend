@@ -12,3 +12,6 @@ export const createExerciseFailure = createAction(
   '[Add Exercise Page] Create Exercise Failure',
   props<{ errorMsg: string }>()
 );
+export const clearState = createAction(
+  '[Add Exercise Guard] Clear State'
+);
