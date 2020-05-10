@@ -1,1 +1,1 @@
-export * from './exercises.action-types';
+export * from './all.action-types';

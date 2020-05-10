@@ -16,4 +16,9 @@
     </mat-error>
   </mat-form-field>
   <button mat-raised-button type="submit">Add Exercise</button>
+  <ng-container *ngIf="(errorMsg$ | async) as errorMsg">
+    <p class="global-error">
+      {{errorMsg}}
+    </p>
+  </ng-container>
 </form>

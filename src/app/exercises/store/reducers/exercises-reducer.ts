@@ -21,6 +21,3 @@ export const exercisesReducer = createReducer(
 export function exercisesReducerFn(state: CommonExercisesState, action: Action) {
   return exercisesReducer(state, action);
 }
-
-export const EXERCISES_STORE_FEATURE = 'exercises';
-export const selectExercisesState = state => state[EXERCISES_STORE_FEATURE];

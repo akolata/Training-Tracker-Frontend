@@ -5,6 +5,6 @@ export const getExerciseTypes = createAction(
   '[Exercises Resolver] Load Exercises Types'
 );
 export const setExercisesTypes = createAction(
-  '[Exercises Resolver] Set Exercises Types',
+  '[Exercises Effect] Set Exercises Types',
   props<{ types: fromCoreModels.ExerciseType[] }>()
 );

@@ -1,7 +1,10 @@
-import {ExercisesEffects} from "./exercises.effects";
+import {ExercisesEffects} from './exercises.effects';
+import {CreateExerciseEffects} from './create-exercise.effects';
 
 export const effects = [
-  ExercisesEffects
+  ExercisesEffects,
+  CreateExerciseEffects
 ];
 
 export * from './exercises.effects';
+export * from './create-exercise.effects';

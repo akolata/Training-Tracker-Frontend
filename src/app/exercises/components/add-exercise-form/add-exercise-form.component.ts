@@ -1,13 +1,14 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Store} from '@ngrx/store';
-import {Subject} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {takeUntil, tap} from 'rxjs/operators';
 import {BaseComponent} from '@tt-core/components';
 import * as fromSharedModels from '@tt-shared/model';
 import * as fromCoreModels from '@tt-core/model';
 import * as fromCoreServices from '@tt-core/services';
 import * as fromCoreUtils from '@tt-core/utils';
+import * as fromExercisesModels from '../../models';
 import * as fromExercisesStore from '../../store';
 
 @Component({
@@ -19,6 +20,7 @@ export class AddExerciseFormComponent extends BaseComponent implements OnInit, O
 
   form: FormGroup;
   types: fromSharedModels.SelectItem[] = [];
+  errorMsg$: Observable<string>;
 
   private unsubscribe: Subject<void>;
 
@@ -45,6 +47,7 @@ export class AddExerciseFormComponent extends BaseComponent implements OnInit, O
         })
       )
       .subscribe();
+    this.errorMsg$ = this.store.select(fromExercisesStore.selectCreateExerciseErrorMsg);
   }
 
   ngOnDestroy(): void {
@@ -53,7 +56,8 @@ export class AddExerciseFormComponent extends BaseComponent implements OnInit, O
   }
 
   onSubmit(): void {
-    console.log(this.form.value);
+    const formToDispatch: fromExercisesModels.CreateExerciseForm = this.form.value;
+    this.store.dispatch(fromExercisesStore.CreateExerciseActions.createExercise({form: formToDispatch}));
   }
 
   private buildForm(): FormGroup {
